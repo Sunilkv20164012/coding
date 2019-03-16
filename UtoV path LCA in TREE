@@ -1,0 +1,170 @@
+pragma GCC optimize("O3")
+#define _CRT_SECURE_NO_WARNINGS
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <complex>
+#include <math.h>
+#include <set>
+#include <vector>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <stack>
+#include <algorithm>
+#include <list>
+#include <ctime>
+ 
+#include <memory.h>
+#include <assert.h>
+ 
+#define y0 sdkfaslhagaklsldk
+ 
+#define y1 aasdfasdfasdf
+#define yn askfhwqriuperikldjk
+#define j1 assdgsdgasghsf
+#define tm sdfjahlfasfh
+#define lr asgasgash
+#define norm asdfasdgasdgsd
+#define have adsgagshdshfhds
+#define ends asdgahhfdsfshdshfd
+#define prev asdgSHJsfgsdfhdsh
+#define hash asdgasdgasdgdfrywewery
+ 
+#define eps 1e-12
+#define M_PI 3.141592653589793
+#define bsize 300
+ 
+#define ldouble long double
+using namespace std;
+ 
+#define bs 1000000007
+ 
+const int N = 610031;
+ 
+int n,tests;
+vector<int> g[N];
+int a,b;
+ 
+int tin[N],tout[N],timer,up[N][21];
+int dep[N];
+ 
+void dfs (int v, int p = 0) {
+	tin[v] = ++timer;
+	up[v][0] = p;
+	for (int i=1; i<20; ++i)
+		up[v][i] = up[up[v][i-1]][i-1];
+	for (size_t i=0; i<g[v].size(); ++i) {
+		int to = g[v][i];
+		if (to != p){
+			dep[to]=dep[v]+1;
+			dfs (to, v);
+		}
+	}
+	tout[v] = ++timer;
+}
+ 
+bool upper (int a, int b) {
+	return tin[a] <= tin[b] && tout[a] >= tout[b];
+}
+ 
+int lca (int a, int b) {
+	if (upper (a, b))  return a;
+	if (upper (b, a))  return b;
+	for (int i=19; i>=0; --i)
+		if (! upper (up[a][i], b))
+			a = up[a][i];
+	return up[a][0];
+}
+ 
+int get_dist(int a,int b){
+	return abs(dep[a]-dep[b]);
+}
+ 
+bool validate(int v,int lo, int hi){
+	return upper(v,lo)&&upper(hi,v);
+}
+ 
+int lab[N],par[N];
+ 
+int main(){
+//    freopen("apache.in","r",stdin);
+//    freopen("apache.out","w",stdout);
+//    freopen("input.txt", "r", stdin);
+//    freopen("output.txt", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+ 
+    cin>>n>>tests;
+    for (int i=1;i<n;i++){
+    	int a,b;
+    	cin>>a>>b;
+    	g[a].push_back(b);
+    	g[b].push_back(a);
+    }
+ 
+    for (int i=1;i<n;i++){
+    	int a,b;
+    	cin>>a>>b;
+    	a+=n;
+    	b+=n;
+    	g[a].push_back(b);
+    	g[b].push_back(a);
+    }
+ 
+    dfs(1,1);
+    dfs(n+1,n+1);
+ 
+    set<long long> done;
+ 
+    for (int i=1;i<=n*2;i++){
+    	par[i]=up[i][0];
+    }
+ 
+    tests+=3;
+ 
+    for (;tests>3;--tests){
+    	int a,b,c,d;
+    	cin>>a>>b>>c>>d;
+    	if (a>b)
+    		swap(a,b);
+    	if (c>d)
+    		swap(c,d);
+ 
+    	c+=n;
+    	d+=n;
+ 
+    	int l1=lca(a,b);
+    	int l2=lca(c,d);
+    	while (a!=l1)
+    	{
+    		lab[a]=tests;
+    		a=par[a];
+    	}
+    	while (b!=l1){
+    		lab[b]=tests;
+    		b=par[b];
+    	}
+    	lab[l1]=tests;
+ 
+    	int res=0;
+    	while (c!=l2){
+    		if (lab[c-n]==tests)
+    			++res;
+    		c=par[c];
+    	}
+    	while (d!=l2){
+    		if (lab[d-n]==tests){
+    			++res;
+    		}
+    		d=par[d];
+    	}
+    	if (lab[l2-n]==tests)
+    		++res;
+ 
+    	cout<<res<<endl;
+    }
+ 
+//    cin.get(); cin.get();
+    return 0;
+}
