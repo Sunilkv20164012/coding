@@ -2,11 +2,19 @@
 
 using namespace std;
 
-typedef int64_t ll;
 typedef long long ll;
+typedef pair<ll,ll> lll;
+typedef pair<ll,int> lli;
+typedef pair<int,int> ii;
 
 #define EL printf("\n")
+#define OK printf("OK")
 #define pb push_back
+#define mp make_pair
+#define ep emplace_back
+#define X  first
+#define Y  second
+#define fillchar(a,x) memset(a, x, sizeof(a))
 #define FOR(i,l,r) for (int i=l;i<=r;i++)
 #define FORD(i,r,l) for (int i=r;i>=l;i--)
 
@@ -22,6 +30,8 @@ void Print(BigInt a) {
     printf("%d", (a.size() == 0) ? 0 : a.back());
     FORD(i,a.size()-2,0) printf("%09d", a[i]); EL;
 }
+
+
 
 BigInt Integer(string s) {
     BigInt ans;
@@ -53,6 +63,9 @@ BigInt Integer(int x) {
     return Integer((ll) x);
 }
 
+
+
+
 void operator >> (istream &in, BigInt &a) {
     string s;
     getline(cin, s);
@@ -62,6 +75,9 @@ void operator >> (istream &in, BigInt &a) {
 void operator << (ostream &out, BigInt a) {
     Print(a);
 }
+
+
+
 
 bool operator < (BigInt a, BigInt b) {
     Set(a);
@@ -108,6 +124,8 @@ bool operator <= (BigInt a, int b) {
     return (a <= Integer(b));
 }
 
+
+
 BigInt max(BigInt a, BigInt b) {
     if (a > b) return a;
     return b;
@@ -117,6 +135,9 @@ BigInt min(BigInt a, BigInt b) {
     if (a < b) return a;
     return b;
 }
+
+
+
 
 BigInt operator + (BigInt a, BigInt b) {
     Set(a);
@@ -151,13 +172,16 @@ void operator += (BigInt &a, int b) {
     a = a + b;
 }
 
-BigInt operator &mdash; (BigInt a, BigInt b) {
+
+
+
+BigInt operator - (BigInt a, BigInt b) {
     Set(a);
     Set(b);
     BigInt ans;
     int carry = 0;
     FOR(i,0,a.size()-1) {
-        carry += a[i] &mdash; (i < b.size() ? b[i] : 0);
+        carry += a[i] - (i < b.size() ? b[i] : 0);
         if (carry < 0) ans.pb(carry+base), carry = -1;
         else ans.pb(carry), carry = 0;
     }
@@ -165,12 +189,12 @@ BigInt operator &mdash; (BigInt a, BigInt b) {
     return ans;
 }
 
-BigInt operator &mdash; (BigInt a, int b) {
-    return a &mdash; Integer(b);
+BigInt operator - (BigInt a, int b) {
+    return a - Integer(b);
 }
 
 void operator -- (BigInt &a) { // --a
-    a = a &mdash; 1;
+    a = a - 1;
 }
 
 void operator -= (BigInt &a, BigInt b) {
@@ -178,8 +202,11 @@ void operator -= (BigInt &a, BigInt b) {
 }
 
 void operator -= (BigInt &a, int b) {
-    a = a &mdash; b;
+    a = a - b;
 }
+
+
+
 
 BigInt operator * (BigInt a, BigInt b) {
     Set(a);
@@ -229,7 +256,7 @@ BigInt operator / (BigInt a, BigInt b) {
             else
                 L = mid+1;
         }
-        cur = cur &mdash; Integer(x-1)*b;
+        cur = cur - Integer(x-1)*b;
         ans.insert(ans.begin(),x-1);
     }
     Set(ans);
@@ -257,6 +284,8 @@ void operator /= (BigInt &a, int b) {
     a = a / b;
 }
 
+
+
 BigInt operator % (BigInt a, BigInt b) {
     Set(a);
     Set(b);
@@ -274,7 +303,7 @@ BigInt operator % (BigInt a, BigInt b) {
             else
                 L = mid+1;
         }
-        ans = ans &mdash; Integer(x-1)*b;
+        ans = ans - Integer(x-1)*b;
     }
     Set(ans);
     return ans;
@@ -323,6 +352,7 @@ BigInt sqrt(BigInt a) {
     return x0;
 }
 
+
 BigInt pow(BigInt a, BigInt b) {
     if (b == Integer(0)) return Integer(1);
     BigInt tmp = pow(a, b/2);
@@ -330,9 +360,11 @@ BigInt pow(BigInt a, BigInt b) {
     return tmp * tmp * a;
 }
 
+
 BigInt pow(BigInt a, int b) {
     return pow(a,(Integer(b)));
 }
+
 
 int log(int n, BigInt a) { // log_n(a)
     Set(a);
@@ -343,6 +375,7 @@ int log(int n, BigInt a) { // log_n(a)
     }
     return ans;
 }
+
 
 int main()
 {
@@ -373,10 +406,10 @@ int main()
 
     cout << sqrt(A);
     printf("%d %d %d\n", log(2,A), log(10,B), log(5,C));
-
+	cout<<"jgjh";
     A = Integer(16); x = 12;
     cout << pow(A,B);
     cout << pow(A,x);
-
+	cout<<"jhgkiu";
     return 0;
 }
